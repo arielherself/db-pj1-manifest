@@ -1,0 +1,25 @@
+name: db-pj1
+services:
+  backend:
+    image: arielherself/bserv_backend
+    depends_on:
+      database:
+        condition: service_healthy
+    links:
+      - "database:postgres"
+  frontend:
+    image: arielherself/bserv_frontend
+    ports:
+      - 8080:8999
+    links:
+      - "backend:bserv"
+  database:
+    image: arielherself/bserv_pg
+    environment:
+      POSTGRES_DB: bserv
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bserv"]
+      interval: 1s
+      timeout: 10s
+      retries: 5
