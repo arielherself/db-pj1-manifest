@@ -8,4 +8,4 @@
 docker compose up
 ```
 
-即可。
+即可在 http://localhost:8080 访问应用。
